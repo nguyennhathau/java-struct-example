@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts 
+Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+	<form-beans>
+         <form-bean name="depmForm" type="form.DepartmentForm" />
+		 <form-bean name="organForm" type="form.OrganisationForm"></form-bean>
+	</form-beans>
+	<action-mappings>
+	<!-- list department -->
+        <action input="/listDepartment.jsp" name="depmForm"
+            path="/danhSachDepm" scope="request" type="action.DanhSachDepmAction">
+            <forward name="showListDepm" path="/listDepartment.jsp"/>
+        </action>
+        
+         <action input="/listDepartment.jsp" name="depmForm"
+            path="/active" scope="request" type="action.InActiveAction">
+            <forward name="active" path="/listDepartment.jsp"/>
+        </action>
+        
+        <action input="/danhSachDepm" name="depmForm"
+            path="/table" scope="request" type="action.Table">
+            <forward name="table" path="/table.jsp"/>
+             <forward name="dsDepm" path="/danhSachDepm"/>
+        </action>
+        
+        <!-- return json -->
+        <action input="/err.jsp" name="organForm"
+            path="/setJson" scope="request" type="action.JsonAction">
+            <forward name="setJson" path="/json.jsp"/>
+        </action>
+        
+         <!-- return change active -->
+        <action input="/err.jsp" name="depmForm"
+            path="/changeActive" scope="request" type="action.ChangeActiveAction">
+            <forward name="setJsonactive" path="/activeJson.jsp"/>
+        </action>
+        
+        <action input="/addDepartment.jsp" name="depmForm"
+            path="/addDepartment" scope="request" type="action.AddDepartmentAction">
+            <forward name="addok" path="/danhSachDepm.do" redirect="true"/>
+            <forward name="add" path="/addDepartment.jsp"/>
+             <forward name="addError" path="/addDepartment.jsp"/>
+        </action>
+        
+        
+
+
+	</action-mappings>
+	<message-resources parameter="action.ApplicationResources" />
+	
+</struts-config>
