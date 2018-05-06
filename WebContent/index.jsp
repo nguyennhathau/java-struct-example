@@ -12,8 +12,12 @@
 </head>
 <body>
 	<html:link action="/danhSachDepm">Danh sách Department</html:link>
-<a href="./changeActive.do?departmentName=AAA123&active=No">test</a>
+	<a href="./changeActive.do?departmentName=AAA124&active=Yes">test</a>
 
 
+    <script type="text/javascript"></script>
+	<p id="depmName"></p>
+	<p id="depmActive"></p>
+	<p id="mess"></p>
 </body>
 </html>

@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import org.apache.struts.action.ActionForm;
 
+import model.bean.Contact;
 import model.bean.Country;
 import model.bean.Department;
+import model.bean.PostCode;
+import model.bean.TypeOfBusiness;
 
 public class DepartmentForm extends ActionForm{
 	private ArrayList<Department> depmList;
@@ -33,12 +36,39 @@ public class DepartmentForm extends ActionForm{
 	private String submit;
 	private String filter;
 	private String message;
+	private ArrayList<Contact> listContact;
+	private ArrayList<PostCode> listPostCode;
+	private ArrayList<TypeOfBusiness> listTypeOfBusiness;
 	private ArrayList<Country> listCountry;
 	private String all;
 	private Department department;
 	
 	
 	
+
+	public ArrayList<Contact> getListContact() {
+		return listContact;
+	}
+
+	public void setListContact(ArrayList<Contact> listContact) {
+		this.listContact = listContact;
+	}
+
+	public ArrayList<PostCode> getListPostCode() {
+		return listPostCode;
+	}
+
+	public void setListPostCode(ArrayList<PostCode> listPostCode) {
+		this.listPostCode = listPostCode;
+	}
+
+	public ArrayList<TypeOfBusiness> getListTypeOfBusiness() {
+		return listTypeOfBusiness;
+	}
+
+	public void setListTypeOfBusiness(ArrayList<TypeOfBusiness> listTypeOfBusiness) {
+		this.listTypeOfBusiness = listTypeOfBusiness;
+	}
 
 	public Department getDepartment() {
 		return department;

@@ -35,12 +35,12 @@ public class DanhSachDepmAction extends Action {
 		}
 
 		ArrayList<Department> depmList = null;
-			if (filter.equals("all")) {
-				depmList = (ArrayList<Department>) depmBO.getListDepm();
-			} else {
-				depmList = (ArrayList<Department>) depmBO.getListByFirstWord(filter);
-			}
-		
+		if (filter.equals("all")) {
+			depmList = (ArrayList<Department>) depmBO.getListDepm();
+		} else {
+			depmList = (ArrayList<Department>) depmBO.getListByFirstWord(filter);
+		}
+
 		int totalDepm = depmList.size();
 		int so_dau_trang, so_cuoi_trang, tong_so_trang;
 

@@ -51,48 +51,41 @@ input[type=radio] {
 </style>
 <script type="text/javascript">
 	function validateCus() {
-
 		var postCodeReg = /^\w{2}\d+$/;
 		var phoneReg = /^\d{9,10}$/;
 		var emailReg = /^\w+@\w+\.\w+$/;
 		var departmentShortDesReg = /^\w{1,50}$/;
 
+		var departmentName = $('#departmentName').val();
 		var postCode = $('#postcode').val();
 		var email = $('#email').val();
 		var phone = $('#phone').val();
 		var departmentShortDes = $('#departmentShortDes').val();
-		console.log(postCode);
-		if (postCode == "" | departmentShortDes == "") {
-			$("#message").addClass("show").removeClass("hide");
-			$("#message").text("Các bắt buộc không được rỗng");
-			return false;
-		} else {
+
+		if (departmentName == "" | departmentShortDes == ""){
+			$("#message1").addClass("show").removeClass("hide");
+			$("#message1").text("Các bắt buộc không được rỗng");
+			
 			if (!postCodeReg.test(postCode) && !postCode == "") {
-				$("#message").addClass("show").removeClass("hide");
-				$('#message').text('postCode phải có định dạng như: "PC001"');
-				$("#postcode").focus();
-				return false;
-			} else if (!departmentShortDesReg.test(departmentShortDes)) {
-				$("#message").addClass("show").removeClass("hide");
-				$('#message').text(
-						'departmentShortDes có độ dài không quá 50 kí tự');
-				$("#departmentShortDes").focus();
-				return false;
-			} else if (!phoneReg.test(phone) && !phone == "") {
-				$("#message").addClass("show").removeClass("hide");
-				$('#message')
-						.text(
-								'số điện thoại chưa đúng định dạng. phải có 9 hoặc 10 số');
-				$("#phone").focus();
-				return false;
-			} else if (!emailReg.test(email) && !email == "") {
-				$("#message").addClass("show").removeClass("hide");
-				$('#message').text('email phải có @ và .');
-				$("#email").focus();
-				return false;
+				$("#message2").addClass("show").removeClass("hide");
+				$("#message2").text("postCode phải có định dạng như: PC001");
 			}
-			return true;
+			if (!departmentShortDesReg.test(departmentShortDes)) {
+				$("#message3").addClass("show").removeClass("hide");
+				$("#message3").text("departmentShortDes có độ dài không quá 50 kí tự");
+			}
+			if (!phoneReg.test(phone) && !phone == "") {
+				$("#message4").addClass("show").removeClass("hide");
+				$("#message4").text("số điện thoại chưa đúng định dạng. phải có 9 hoặc 10 số");
+			}
+			if (!emailReg.test(email) && !email == "") {
+				$("#message5").addClass("show").removeClass("hide");
+				$("#message5").text("email phải có @ và .");
+			}
+			return false;
 		}
+
+		return true;
 	}
 </script>
 </head>
@@ -122,10 +115,7 @@ input[type=radio] {
 				<div class="tab-content wp-tab">
 					<div role="tabpanel" class="tab-pane active" id="tab">
 						<div class="row">
-							<div class="col-md-12 col-lg-12">
-								<p class="hide" id="message"
-									style="text-align: center; color: red;"></p>
-							</div>
+
 							<div class="col-md-12 col-lg-12">
 								<div class="form-group col-md-6 col-lg-6">
 									<label>Department Name <span class="color-red">*</span></label>
@@ -160,56 +150,113 @@ input[type=radio] {
 										name="leadContact" class="form-control" id=""
 										style="width: 200px;"> <a data-toggle="modal"
 										href='#lc'>lookup</a> <br> <label>Copy Address
-										from</label> <input type="radio" name="address" value="Organisation" 
-										onclick="loadDoc1();">
-										<span style="margin-right: 40px;">Organisation</span>
-
-									 <input
-										type="radio" name="address" value="Parent" onclick="loadDoc1();"> 
-										<span style="margin-right: 40px;">Parent</span>
+										from</label> <input type="radio" name="address" value="Organisation"
+										onclick="loadDoc1();"> <span
+										style="margin-right: 40px;">Organisation</span> <input
+										type="radio" name="address" value="Parent"
+										onclick="loadDoc1();"> <span
+										style="margin-right: 40px;">Parent</span>
 								</div>
 								<script>
-										function loadDoc1() {
-											$(document).on('change', 'input[name="address"]:radio', function(){
-												if($(this).val() == "Organisation"){
-													 xhttp = new XMLHttpRequest();
-													  xhttp.onreadystatechange = function() {
-													    if (this.readyState == 4 && this.status == 200) {
-													    	var myJSON = this.responseText;
-															var obj = JSON.parse(myJSON); 
-															$("#addressLine1").val(obj.addressLine1);
-															$("#addressLine2").val(obj.addressLine2);
-															$("#addressLine3").val(obj.addressLine3);
-															$('#addressLine1').prop('readonly', false);
-	                                                        $('#addressLine2').prop('readonly', false);
-	                                                        $('#addressLine3').prop('readonly', false);
-													    }
-													  };
-													  xhttp.open("GET", "./setJson.do", true);
-													  xhttp.send();
-												}
-												if($(this).val() == "Parent"){
-													xhttp = new XMLHttpRequest();
-                                                    xhttp.onreadystatechange = function() {
-                                                      if (this.readyState == 4 && this.status == 200) {
-                                                          var myJSON = this.responseText;
-                                                          var obj = JSON.parse(myJSON); 
-                                                          $("#addressLine1").val(obj.addressLine1);
-                                                          $("#addressLine2").val(obj.addressLine2);
-                                                          $("#addressLine3").val(obj.addressLine3);
-                                                          $('#addressLine1').prop('readonly', true);
-                                                          $('#addressLine2').prop('readonly', true);
-                                                          $('#addressLine3').prop('readonly', true);
-                                                      }
-                                                    };
-                                                    xhttp.open("GET", "./setJson.do", true);
-                                                    xhttp.send();
-													
-												}
-												
-											});
-										}
-									</script> 
+									function loadDoc1() {
+										$(document)
+												.on(
+														'change',
+														'input[name="address"]:radio',
+														function() {
+															if ($(this).val() == "Organisation") {
+																xhttp = new XMLHttpRequest();
+																xhttp.onreadystatechange = function() {
+																	if (this.readyState == 4
+																			&& this.status == 200) {
+																		var myJSON = this.responseText;
+																		var obj = JSON
+																				.parse(myJSON);
+																		$(
+																				"#addressLine1")
+																				.val(
+																						obj.addressLine1);
+																		$(
+																				"#addressLine2")
+																				.val(
+																						obj.addressLine2);
+																		$(
+																				"#addressLine3")
+																				.val(
+																						obj.addressLine3);
+																		$(
+																				'#addressLine1')
+																				.prop(
+																						'readonly',
+																						false);
+																		$(
+																				'#addressLine2')
+																				.prop(
+																						'readonly',
+																						false);
+																		$(
+																				'#addressLine3')
+																				.prop(
+																						'readonly',
+																						false);
+																	}
+																};
+																xhttp
+																		.open(
+																				"GET",
+																				"./setJson.do",
+																				true);
+																xhttp.send();
+															}
+															if ($(this).val() == "Parent") {
+																xhttp = new XMLHttpRequest();
+																xhttp.onreadystatechange = function() {
+																	if (this.readyState == 4
+																			&& this.status == 200) {
+																		var myJSON = this.responseText;
+																		var obj = JSON
+																				.parse(myJSON);
+																		$(
+																				"#addressLine1")
+																				.val(
+																						obj.addressLine1);
+																		$(
+																				"#addressLine2")
+																				.val(
+																						obj.addressLine2);
+																		$(
+																				"#addressLine3")
+																				.val(
+																						obj.addressLine3);
+																		$(
+																				'#addressLine1')
+																				.prop(
+																						'readonly',
+																						true);
+																		$(
+																				'#addressLine2')
+																				.prop(
+																						'readonly',
+																						true);
+																		$(
+																				'#addressLine3')
+																				.prop(
+																						'readonly',
+																						true);
+																	}
+																};
+																xhttp
+																		.open(
+																				"GET",
+																				"./setJson.do",
+																				true);
+																xhttp.send();
+
+															}
+
+														});
+									}
+								</script>
 								<div class="form-group">
 									<label>DepartmentFull Description</label>
 									<textarea name="DepartmentFullDes" class="form-control"
@@ -281,13 +328,28 @@ input[type=radio] {
 							<div class="col-md-12 col-lg-12">
 								<div class="form-group col-md-6 col-lg-6">
 									<label>Nation/Country</label>
-									<html:select property="countryID" styleClass="form-control">
+									<html:select property="countryID" styleClass="form-control" value="4">
 										<!-- <option>----Chọn----</option> -->
 										<html:optionsCollection name="depmForm" property="listCountry"
 											label="countryName" value="countryID" />
 									</html:select>
 								</div>
 
+							</div>
+
+							<div class="col-md-12 col-lg-12">
+								<p class="hide" id="message1"
+									style="text-align: center; color: red;"></p>
+								<p class="hide" id="message2"
+									style="text-align: center; color: red;"></p>
+								<p class="hide" id="message3"
+									style="text-align: center; color: red;"></p>
+								<p class="hide" id="message4"
+									style="text-align: center; color: red;"></p>
+								<p class="hide" id="message5"
+									style="text-align: center; color: red;"></p>
+								<p class="hide" id="message6"
+									style="text-align: center; color: red;"></p>
 							</div>
 						</div>
 					</div>

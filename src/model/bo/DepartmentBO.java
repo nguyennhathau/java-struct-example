@@ -50,4 +50,8 @@ public class DepartmentBO {
 	public boolean changeActive(String depmName, String active){
 		return depmDB.updateActive(depmName,active);
 	}
+	
+	public boolean updateDepm(Department depm){
+		return depmDB.updateDepm(depm);
+	}
 }

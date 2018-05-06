@@ -146,7 +146,9 @@
 								<logic:iterate name="depmForm" property="depmList" id="depm">
 									<tr onclick="changeIncidentValue(this)">
 										<!-- <tr> -->
-										<td><bean:write name="depm" property="departmentName" /></td>
+										<td><a href="./updateDepartment.do?departmentName=${depm.departmentName}"> <bean:write
+                                                    name="depm" property="departmentName" />
+                                        </a></td>
 										<td><bean:write name="depm" property="adddressLine1" /></td>
 										<td><bean:write name="depm" property="postcode" /></td>
 										<td><bean:write name="depm" property="leadContact" /></td>
@@ -181,15 +183,17 @@
 					        		 var depmName = $(".highlight").find('td:first').text();
 	                                 var active = $(".highlight").find('td:last-child').text();
 	                                 var message = $("#message").text();
-	                                console.log(depmName + " " +active);
+	                                console.log("bb " + depmName + " " +active +" bb");
 	                                xhttp = new XMLHttpRequest();
 	                                xhttp.onreadystatechange = function() {
 	                                    if (this.readyState == 4 && this.status == 200) {
 	                                        var myJSON = this.responseText;
 	                                        var obj = JSON.parse(myJSON); 
-	                                        console.log(obj.message + " " +obj.active);
-	                                        $(".highlight").find('td:last-child').html(obj.active);
-	                                        $("#message").html(obj.message);
+	                                        console.log("aa " +obj.departmentName+ " "+ obj.message + " " +obj.active + " aa");
+	                                        /* $("#depmName1").text(obj.departmentName);
+                                            $("#depmActive").html(obj.active); */
+                                            $(".highlight").find('td:last-child').text(obj.active);
+	                                        $("#message").text(obj.message);
 	                                    }
 	                                };
 	                                xhttp.open("GET", "./changeActive.do?departmentName="+depmName+"&active="+active, true);
@@ -200,6 +204,7 @@
 	                               });
 					       });
 					</script>
+					
 					<p style="color: red;" id="demo1"></p>
 					<!-- phan trang  -->
 					<ul id="phantrang">

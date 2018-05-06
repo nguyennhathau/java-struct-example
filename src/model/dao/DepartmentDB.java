@@ -233,7 +233,7 @@ public class DepartmentDB {
 				+ " Addressline3, PostCode, Town, County, CountryID, TypeofBusiness, OrganisationName, "
 				+ "SICcode, FullDescription, PhoneNumber, Fax, Email, WebAddress, "
 				+ "CASE WHEN Active = 1 THEN 'Yes' ELSE 'No' END AS Active FROM Department "
-				+ "WHERE Active =1 AND DepartmentName = '" + name + "'";
+				+ "WHERE DepartmentName = '" + name + "'";
 		try {
 //			PreparedStatement ps =con.prepareStatement(sql);
 			Statement st=con.createStatement();
@@ -310,14 +310,15 @@ public class DepartmentDB {
 	public boolean updateActive(String depmName,String active){
 		Connection con = ConnectDB.getConnection();
 		boolean t = false;
-		int changeActive = 0;
 		
 		if("No".equals(active)){
-			changeActive = 1;
+			active = "True";
 		}
-		//" + changeActive + "     " + depmName + "
+		if("Yes".equals(active)){
+			active = "False";
+		}
 		try {
-			String sql = "UPDATE Department SET Active ="+ changeActive + "  WHERE DepartmentName = '" + depmName+"'";
+			String sql = "UPDATE Department SET Active ='"+ active + "' WHERE DepartmentName = '" + depmName+ "'";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.executeUpdate();
 			System.out.println("ok");
@@ -331,6 +332,51 @@ public class DepartmentDB {
 		return t;
 	}
 	
+	/**
+	 * update department infomation
+	 * @param depm
+	 * @return boolean
+	 */
+	public boolean updateDepm(Department depm){
+		Connection con = ConnectDB.getConnection();
+		boolean t = false;
+		
+		try {
+			String sql = "update Department SET DepartmentShortDescription=?, "
+					+ "leadContact=?, OrganisationName=?, Addressline1=?, "
+					+ "Addressline2=?, Addressline3=?, PostCode =?, Town=?, County=?, CountryID=?, "
+					+ "TypeofBusiness=?, SICcode=?, FullDescription=?,PhoneNumber=?, Fax=?, Email=?,"
+					+ " WebAddress=? "
+					+ "WHERE DepartmentName = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, depm.getDepartmentShortDes());
+			ps.setString(2, depm.getLeadContact());
+			ps.setString(3, depm.getCopyAddressFrom());
+			ps.setString(4, depm.getAdddressLine1());
+			ps.setString(5, depm.getAdddressLine2());
+			ps.setString(6, depm.getAdddressLine3());
+			ps.setString(7, depm.getPostcode());
+			ps.setString(8, depm.getTown());
+			ps.setString(9, depm.getCounty());
+			ps.setInt(10, depm.getCountryID());
+			ps.setString(11, depm.getTypeOfBusiness());
+			ps.setInt(12, depm.getSicCode());
+			ps.setString(13, depm.getDepartmentFullDes());
+			ps.setString(14, depm.getPhone());
+			ps.setString(15, depm.getFax());
+			ps.setString(16, depm.getEmail());
+			ps.setString(17, depm.getWebAddress());
+			 
+			ps.setString(18, depm.getDepartmentName());
+			ps.executeUpdate();
+			t = true;
+			ps.close();
+			con.close();
+		} catch (SQLException e) {
+			//do something
+		}
+		return t;
+	}
 	/*public static void main(String[] args) {
 		Connection con = ConnectDB.getConnection();
 		
